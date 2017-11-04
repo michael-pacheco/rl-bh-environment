@@ -5,13 +5,14 @@ from skimage import color, transform, exposure
 
 game = Main()
 
+from config import num_of_cols, num_of_rows
 
 for i in range(9999999):
     _, test, _ = game.MainLoop(3)
-    if i>400:
+    if i>200:
 
         gray = color.rgb2gray(test)
-        resized_gray = transform.resize(gray,(80,80))
+        resized_gray = transform.resize(gray,(num_of_cols,num_of_rows))
         result = Image.fromarray(test, 'RGB')
         result.show()
         result.save('screenshot.png')

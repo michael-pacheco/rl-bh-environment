@@ -5,6 +5,5 @@ from keras.layers import Conv2D
 game = Main()
 
 model = Sequential()
-model.add(Dense(512, input_dim=512))
 while True:
     game.MainLoop(3)
