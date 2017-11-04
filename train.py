@@ -1,33 +1,41 @@
 from main import Main
 from keras.models import Sequential
 from keras.layers.core import Dense, Flatten
-from keras.layers import Conv2D
+from keras.layers import Conv2D, MaxPooling2D
 import numpy as np
 from collections import deque
 import pyautogui
 from skimage import color, transform, exposure
 import random
+#from keras.utils import plot_model
 
 game = Main()
 D = deque()
 num_of_cols, num_of_rows = 80, 80
+num_of_hidden_layer_neurons = 512
 img_channels = 4
 num_of_actions = 2
-batch_size = 16
+batch_size = 32
 epsilon = 0.1
-observe = 128
+observe = 50000
 gamma = 0.9
 action_array = ['left', 'right']
+death_reward = -50
+timesteps_to_save_weights = 500
+exp_replay_memory = 50000
 
 #Convolves 32 filters size 8x8 with stride = 4
 model = Sequential()
-model.add(Conv2D(32, kernel_size=(8,8), strides=(4, 4), activation='relu',input_shape=(num_of_rows,num_of_cols,img_channels)))
+model.add(Conv2D(32, kernel_size=(8,8), strides=(4, 4), activation='relu',input_shape=(num_of_cols,num_of_rows,img_channels)))
+model.add(MaxPooling2D(pool_size=(4,4), strides=(2, 2), padding='same'))
 model.add(Conv2D(64, kernel_size=(4,4), strides=(2, 2), activation='relu'))
-model.add(Conv2D(64, kernel_size=(2,2), strides=(2, 2), activation='relu'))
+model.add(Conv2D(128, kernel_size=(2,2), strides=(2, 2), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2,2), strides=(1, 1), padding='same'))
 model.add(Flatten())
-model.add(Dense(256, activation='relu'))
+model.add(Dense(num_of_hidden_layer_neurons, activation='relu'))
 model.add(Dense(num_of_actions))
 model.compile(loss='mse',optimizer='adam')
+#plot_model(model, to_file='model.png')
 #model.load_weights("weights.hdf5")
 #Start game and press 'x' so we enter the game.
 start_game = game.MainLoop(3)
@@ -37,9 +45,9 @@ start_game = game.MainLoop(3)
 r_0, s_t, s_f = game.MainLoop(3)
 #Failsafe press of x - sometimes startup lags affects ability to enter the game successfully
 #pyautogui.press('x')
-#Turn our screenshot to gray scale, resize to 80*80, and use histogram  equalization to make shades more intense
+#Turn our screenshot to gray scale, resize to 80*80, and make pixels in 0-255 range
 s_t = color.rgb2gray(s_t)
-s_t = transform.resize(s_t,(num_of_rows,num_of_cols))
+s_t = transform.resize(s_t,(num_of_cols,num_of_rows))
 s_t = exposure.rescale_intensity(s_t,out_range=(0,255))
 s_t = np.stack((s_t, s_t, s_t, s_t), axis=2)
 #In Keras, need to reshape
@@ -62,12 +70,16 @@ while True:
     a_t = np.zeros([num_of_actions])   #initalize acctions as an array that holds one array [0, 0]
 
     #choose an action epsilon greedy, or the action that will return the highest reward using our network
-    if random.random() <= epsilon:
-        action_index = random.randint(0, num_of_actions-1)    #choose a random action
-        explored = True
+	#i chose to create an arbitrary policy before it starts learning to try and explore as much as it can
+    if t < observe:
+        action_index = 1 if random.random() < 0.5 else 0
     else:
-        q = model.predict(s_t)       #input a stack of 4 images, get the prediction
-        action_index = np.argmax(q)
+        if random.random() <= epsilon:
+            action_index = random.randint(0, num_of_actions-1)    #choose a random action
+            explored = True
+        else:
+            q = model.predict(s_t)       #input a stack of 4 images, get the prediction
+            action_index = np.argmax(q)
     #pyautogui.keyDown(action_array[action_index])
     #keyboard.press(action_array[action_index])
 
@@ -86,7 +98,7 @@ while True:
     #append the state to our experience replay memory
     D.append((s_t, action_index, r_t, s_t1, terminal))
 
-    if len(D) > 10000:
+    if len(D) > exp_replay_memory:
         D.popleft()
 
     '''
@@ -118,7 +130,7 @@ while True:
             Q_sa = model.predict(state_t1)
             #set the value of the action we chose in each state in the random minibatch to the reward given at that state (Q-learn)
             if terminal:
-                targets[i, action_t] = -500
+                targets[i, action_t] = death_reward
             else:
                 targets[i, action_t] = reward_t + gamma * np.max(Q_sa)
 
@@ -130,9 +142,9 @@ while True:
     time step ++
     '''
     s_t = s_t1
-    t = t + 1
+    t += 1
 
-    if t % 500 == 0:
+    if t % timesteps_to_save_weights == 0:
         model.save_weights('weights.hdf5', overwrite=True)
 
-    print("Timestep: %d, Action: %d, Reward: %d, Q: %d, Loss: %d, Explored: %s" % (t, action_index, r_t, np.max(Q_sa), loss, explored))
+    print("Timestep: %d, Action: %d, Reward: %.2f, Q: %.2f, Loss: %.2f, Explored: %s" % (t, action_index, r_t, np.max(Q_sa), loss, explored))

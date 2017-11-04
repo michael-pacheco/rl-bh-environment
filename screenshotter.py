@@ -7,7 +7,7 @@ game = Main()
 
 
 for i in range(9999999):
-    _, test, _ = game.MainLoop()
+    _, test, _ = game.MainLoop(3)
     if i>400:
 
         gray = color.rgb2gray(test)
