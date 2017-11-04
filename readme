@@ -1,0 +1,92 @@
+** CHARACTERS **
+
+ Lieutenant Reed:
+ The second-in-command of the Quincy Experimental Weapons Corp. He moves at average speed, has an average size hitbox, has very fast stamina loss, and very slow stamina recovery. His shields are very weak, but last a long time. They have average recovery. He fires very high-damage bullets with a narrow spray effect. His charge attack fires four lines of electricity in front of him.
+
+ Dragonfly:
+ A youkai who controls dragonflies. She moves slowly and has a large hitbox, but has fast stamina recovery. Her shields are weak, expensive, and don't last very long, but recover quickly. She fires very quickly. She summons dragonflies, which fly randomly across the field, very quickly, and have low damage. Her charge attack sends a large swarm of dragonflies out across the field.
+
+ Ormrinn:
+ An expert assassin known for his brutal methods. He is fast, has average stamina loss and recovery, and an average sized hitbox. His shields are very strong and cheap, but have a very short duration and slow recovery. He throws knives in combat, which are difficult to aim with, but can deal very high damage if used properly. His charge attack sends six spirals of knives spinning out from him.
+
+ Karex:
+ A young air magician. She moves at average seed, has a small hitbox, has average stamina loss and recovery. Her shields have very high health, but average duration, cost, and recovery. She fires very slowly. Her bullets are slow, but are guided and very powerful. Her charge attack fires a large mass of guided bullets.
+
+ Lerea:
+ Apprentice to the Mad Hermit. She moves at average speed, has an average size hitbox, and average stamina loss and recovery. Her shields have average health, and average duration, cost, and recovery. She fires very quickly. Her bullets are fast, weak, and have a narrow spray effect. Her charge attack fires six very large, slow, very high-damage projectiles.
+
+** KNOWN BUGS **
+
+ * Monsters will sometimes leave the screen.
+ This is really a problem with my movement AIs--The easiest way to fix it is to code them so that they change direction if they leave the screen. Also, although it has never happened, if a boss were to wander 504 pixels off-screen in any direction, it would be automatically killed, without its death hooks being triggered, so that the player would be stuck in that stage forever. This is high priority, and should be fixed soon.
+
+ * The framerate isn't consistent.
+ Unfortunately, with a curtain shooter game, this is unavoidable. I recommend not running anything particularly strenous while playing (iTunes and Azureus are particularly bad) if you have serious trouble with this. Also, I will eventually implement a little framerate counter, which, although it won't fix the problem, will at least make it look like it's under control.
+
+ ** CHANGELOG **
+
+ * 0.8.2:
+  * Fixed a bug that broke the pause feature
+  * Refixed all float errors
+  * Fixed the menu display error
+  * Minor updates to several sprites
+  * Fixed a bug that allowed the player (Especially Lt. Reed) to get negative stamina values, allowed them to continue firing forever
+  * Added pickling
+
+ * 0.8.1:
+  * Raised all character's (Except Lerea's) firing delay to 2, doubled player attack
+  * Added data and images for Lerea
+  * Added support for player bullet spin
+  * Lowered player attack by 10
+  * Changed Kappa spawn point to the left side of the field
+  * Raised number of projectiles in Lerea's charge attack from 3 to 6
+  * Added get_rand_item function
+  * Made player loading automatic
+  * Added pause feature
+  * Added level counter
+  * Changed character menu to reflect order of character creation
+  * Added difficulties
+  * Created Mac OS X universal binary
+
+ * 0.7.1:
+  * Removed backgrounds
+  * Changed sprite images to replace black with dark blue/brown/purple
+  * Edited Kitsune bullet image
+  * Added explosion support for multiple unit types
+  * Added support for monster bullet free-spin
+  * Added explosion image and data for Tanuki
+  * Added random bullet scatter support for monsters
+  * Increased Tanuki bullet number from 9 to 12
+  * Increased Kitsune, Tanuki, Tengu, and Kappa bullet speed factor
+  * Lowered player hitbox size by 4 pixels, lowered Dragonfly hitbox size by 1 extra
+  * Fixed a testing bug that allowed the player to fire charge shots without being at full charge
+  * Fixed all float errors (Not quite!)
+  * Increased framerate from 25 to 33
+  * Decreased all speeds by 1, decreased Ormrinn bullet speed by 1 extra
+  * Added support for guided player bullets and charge bullets
+  * Added data and images for Karex
+  * Fixed a minor bug which caused monsters that were not killed in one stage to be carried over to the next
+
+ * 0.6.1:
+  * Replaced Bakezouri with Tanuki, replaced Karakasa with Kitsune, replaced Lt. Reed bullet image
+  * Increased boss health, increased Kitsune health, lowered Dragonfly damage, lowered charge attack damages, increased Lt. Reed damage
+  * Made all three levels considerably harder in terms of monster spawn numbers and frequency
+  * Fixed a minor bug which caused player bullets that are still on-screen at the end of a level to remain on-screen at the start of the next, fixed rotation error for bullets created with the explode function, did a semi-fix for the bug that allowed the player to fire through their own shields (They can still do it, but it's much harder and more dangerous), fixed a fatal error caused by a misnamed image file
+  * Changed color of Kappa's bullets to orange, changed sprite for bullets created with the explode function
+  NOTE: There was a version control error, and part-way through development of this release, the main.py file was reverted to the master file, which had not been updated since just before 0.5.1 was released. If you find any inconsistencies, please let me know.
+ 
+ * 0.5.1: Updated Kappa image, fixed a testing bug that caused the Kappa to spawn at the start of stage two, and then again at the end.
+
+ ** TODO **
+
+ * Get py2app and py2exe working
+ * Implement dialogue (Cute graphics imply but do not equal moe factor)
+ * Add music
+ * Change stamina bar so that it turns red after the player has run it down to 0
+ * Rewrite monster AI handling for greater flexibility (Maybe)
+ * Add two more monsters (Maybe) 
+
+ ** CREDITS **
+
+All coding, art, etc were done by me, that is, Skizzaltix (sce.inkwash.net). However, the game itself is a knockoff of Team Shanghai Alice's Touhou Project (Also known as Project Shrine Maiden), and, as such, almost all credit for game concepts goes to ZUN, the sole member of Team Shanghai Alice.
+Also, credit for a few other game concepts and motivation, as well as making me start the whole thing, goes to Yuuei (apm.inkwash.net).
