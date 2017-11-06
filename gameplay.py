@@ -1,3 +1,4 @@
+import sys, os
 from main import Main
 from keras.models import Sequential
 from keras.layers.core import Dense, Flatten

@@ -3,6 +3,9 @@
 <h1>Requirements: (Python 3x)</h1>
 <ul>
   <li>
+    Numpy
+  </li>
+  <li>
     Pygame
   </li>
   <li>

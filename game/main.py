@@ -1,4 +1,6 @@
 import pygame
+import sys
+
 from pygame.locals import *
 import os, sys, profile, pstats
 import random
@@ -9,8 +11,9 @@ import pygame.surfarray as surfarray
 from helpers import *
 import sprites
 import levels
-
+sys.path.append("../")
 from config import reward_on_hit, reward_in_env, death_reward
+
 
 class Main:
 
