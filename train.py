@@ -1,10 +1,11 @@
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__))+"/game")
 from main import Main
 from keras.models import Sequential
 from keras.layers.core import Dense, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 import numpy as np
 from collections import deque
-import pyautogui
 from skimage import color, transform, exposure
 import random
 #from keras.utils import plot_model

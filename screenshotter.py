@@ -1,3 +1,5 @@
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__))+"/game")
 from main import Main
 from PIL import Image
 import time
@@ -10,7 +12,6 @@ from config import num_of_cols, num_of_rows
 for i in range(9999999):
     _, test, _ = game.MainLoop(3)
     if i>200:
-
         gray = color.rgb2gray(test)
         resized_gray = transform.resize(gray,(num_of_cols,num_of_rows))
         result = Image.fromarray(test, 'RGB')

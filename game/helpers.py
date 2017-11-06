@@ -1,19 +1,16 @@
 #! /usr/bin/env python
-
 import os, sys
 import pygame
 import random
 from pygame.locals import *
 
 def load_image_trans(name, colorkey=None):
-	print(os.path)
-	path = os.path.join('images')
-	path = os.path.join(path, name)
-	message = 'Cannot load image:', path
+	path = os.path.dirname(os.path.abspath(__file__)) + "/images/"+os.path.join(name)
+	#message = 'Cannot load image:', path
 	try:
 		image = pygame.image.load(path)
 	except (pygame.error, message):
-		
+
 		raise Exception(SystemExit, message)
 	image = image.convert()
 	if colorkey is not None:

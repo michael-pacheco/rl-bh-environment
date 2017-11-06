@@ -18,20 +18,23 @@
     Keras
   </li>
   <li>
-    pyautogui (may not need this anymore)
-  </li>
-  <li>
     h5py
   </li>
 </ul>
-   
 
-<h1>Info</h1>
-<h2>Environment</h2>
+
+<h1>General Information/Notes</h1>
+<h2>Environment and Game</h2>
 <p>
-  I've made a lot of edits to the original game to make it better for automated learning. I tried to write some documentation on the original game, but I have probably left out a lot of information. I've also tried to fix a lot of the bugs that were present in the base game, and I <strong>THINK</strong> I was successful. We'll see about that.
+  I've made a lot of edits to the original game to set it up for automated learning. I tried to write some documentation on the original game, but I have probably left out a lot of information. I've also tried to fix a lot of the bugs that were present in the base game, and I <strong>THINK</strong> I was successful. We'll see about that.
   <br>
+  I set up the game/environment so that random types of monsters (there are only 3 in the game) spawn at the top of the screen in somewhat random locations on the x axis every certain amount of seconds. The game/level will restart when the agent dies. Reward signals that are currently being tracked include hitting enemies, living in the environment, and dying.
 </p>
+<h2>Learning</h2>
+<p>
+  Learning is done in the <strong>train.py</strong> file, along with the settings for it in <strong>config.py</strong>. At this point I still haven't found the best settings for the agent to learn. In most of my attempts it either runs to the sides of the screen o avoid death, or it just sits in the middle anticipating enemy spawns but does not dodge any projectiles.
+</p>
+<h1>File Information</h1>
 <h2>config.py</h2>
 <p>
 This file (should) contain all of the variables you would want to change to customize how your agent learns (except for the network). As of writing this, it contains variables including:
@@ -90,12 +93,12 @@ This file (should) contain all of the variables you would want to change to cust
 
 <h2>main.py</h2>
 <p>
-  File that runs the game. Changed a lot to make it better for automated learning.
+  Main file that contains code needed to run the game. Changed a ton and wrapped it into train.py to set it up for automated learning.
 </p>
 
 <h2>levels.py</h2>
 <p>
-  Defines how the levels are set up and where/which/when monsters spawn on the level. For the environment I chose to modify level 1 so that the agent only spawns on this level, and monsters will spawn for a long amount of time. 
+  Defines how the levels are set up and where/which/when monsters spawn on the level. For the environment I chose to modify level 1 so that the agent only spawns on this level, and monsters will spawn every set amount of seconds for a certain amount of time.
   <br>If you want to change where/when/which monsters spawn on this level, use this file.
 </p>
 
@@ -106,12 +109,12 @@ This file (should) contain all of the variables you would want to change to cust
 
 <h2>gameplay.py</h2>
 <p>
-  Runs the game normally for a real person (you) to play what the agent would play through.
+  Runs the game normally for a real person (you) to play what the agent would play through. Good for testing changes to the actual game/environment.
 </p>
 
 <h2>screenshotter.py</h2>
 <p>
-  Creates and saves screenshots of what images would be sent into the network.
+  Creates and saves screenshots of the images that would be sent into the network.
 </p>
 
 <h2>Check out these other influential projects!</h2>

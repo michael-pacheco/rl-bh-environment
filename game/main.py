@@ -17,16 +17,16 @@ from config import reward_on_hit, reward_in_env, death_reward
 
 class Main:
 
-	
-	
+
+
 	def __init__(self):
-		
+
 		#reward per frame in environment
 		self.reward_given = reward_in_env
 		#reward for hitting a monster
 		self.monster_hit_reward = reward_on_hit
-	
-	
+
+
 		print ("Initializing Pygame...")
 		pygame.init()
 		width,height = 512, 512
@@ -708,4 +708,4 @@ class Main:
 
 if __name__ == "__main__":
 	MainWindow = Main()
-	MainWindow.MainLoop()
+	MainWindow.MainLoop(3)
