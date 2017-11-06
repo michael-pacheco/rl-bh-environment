@@ -1,4 +1,6 @@
-<h1>This is an environment for training a Reinforcement Learning agent on the game <a href="https://www.pygame.org/project/937">Sacred Curry Shooter</a>, a top-down shooter inspired by Team Shanghai Alice' Touhou Project.
+<h1>This is an environment for training a Reinforcement Learning agent on the game <a href="https://www.pygame.org/project/937">Sacred Curry Shooter</a>, a top-down shooter inspired by Team Shanghai Alice' Touhou Project.</h1>
+
+<img src="screenshots/screenshot.png">
 
 <h1>Requirements: (Python 3x)</h1>
 <ul>
